@@ -10,6 +10,7 @@ public class Dir implements Archive{
     public Dir(String dirName, Dir currentDir) {
         this.name = dirName;
         this.parent = currentDir;
+        this.subArchives = new java.util.LinkedHashMap<>();
     }
 
     @Override
@@ -25,7 +26,7 @@ public class Dir implements Archive{
     @Override
     public String getPath() {
         //recorro el arbol agarrando los nombres de los padres.
-        if (parent == null) {
+        if (parent == null || parent.getName().equals("/")) {
             return "/" + name;
         }
         return parent.getPath() + "/" + name;

@@ -6,6 +6,7 @@ import edu.austral.ingsis.clifford.archives.Dir;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class Ls implements Command{
     FileSystem fileSystem;
@@ -19,8 +20,8 @@ public class Ls implements Command{
     @Override
     public String execute() {
         Dir dir = fileSystem.currentDir();
-        List<String> elements = new ArrayList<>(dir.getSubArchives().keySet());
 
+        List<String> elements = new ArrayList<>(dir.getSubArchives().keySet());
 
         if ("asc".equals(option)) {
             Collections.sort(elements);
@@ -32,6 +33,11 @@ public class Ls implements Command{
         for (String element : elements) {
             result.append(element).append(" ");
         }
+
+        if (!result.isEmpty()) {
+            result.deleteCharAt(result.length() - 1);
+        }
+
         return result.toString();
     }
 }

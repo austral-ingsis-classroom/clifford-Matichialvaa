@@ -1,6 +1,7 @@
 package edu.austral.ingsis.clifford.commands;
 
 import edu.austral.ingsis.clifford.FileSystem;
+import edu.austral.ingsis.clifford.archives.Archive;
 import edu.austral.ingsis.clifford.archives.Dir;
 import edu.austral.ingsis.clifford.archives.File;
 
@@ -17,6 +18,12 @@ public class Touch implements Command{
         Dir currentDir = fileSystem.currentDir();
         if (fileName.contains("/") || fileName.contains(" ")){
             return "error nombre invalido";
+        }
+
+        // Eliminar el archivo existente si ya existe
+        Archive existingFile = currentDir.getSubArchive(fileName);
+        if (existingFile instanceof File) {
+            currentDir.removeSubArchive(fileName);
         }
 
         File file = new File(fileName, fileSystem.currentDir());

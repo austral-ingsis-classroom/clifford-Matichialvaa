@@ -9,9 +9,12 @@ import java.util.Map;
 
 public class MyFileSystem implements FileSystem{
     private final Map<String, CommandBuilder> commandBuilders;
+    private final Dir root;
     private Dir currentDirectory;
 
     public MyFileSystem(Map<String, CommandBuilder> commandBuilders) {
+        this.root = new Dir("/", null);
+        this.currentDirectory = root;
         this.commandBuilders = commandBuilders;
     }
 
@@ -30,6 +33,11 @@ public class MyFileSystem implements FileSystem{
 
     public void setCurrentDir(Dir currentDirectory) {
         this.currentDirectory = currentDirectory;
+    }
+
+    @Override
+    public Dir getRootDirectory() {
+        return root;
     }
 
     private Command findExecutable(String completeCommand) {

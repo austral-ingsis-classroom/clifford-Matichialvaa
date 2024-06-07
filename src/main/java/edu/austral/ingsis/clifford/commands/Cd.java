@@ -6,25 +6,36 @@ import edu.austral.ingsis.clifford.archives.Dir;
 
 public class Cd implements Command{
     FileSystem fileSystem;
-    String option;
-    public Cd(FileSystem fileSystem, String option) {
+    String path;
+    public Cd(FileSystem fileSystem, String path) {
         this.fileSystem = fileSystem;
-        this.option = option;
+        this.path = path;
     }
 
     @Override
     public String execute() {
         Dir currentDir = fileSystem.currentDir();
-        if (option.equals("..")) {
-            fileSystem.setCurrentDir(currentDir.getParent());
-        } else {
-            Archive archive = currentDir.getSubArchive(option);
-            if (archive instanceof Dir) {
-                fileSystem.setCurrentDir((Dir) archive);
-            } else {
-                return "error, no hay archivo con ese nombre en el directorio actual";
+        String[] pathComponents = path.split("/");
+
+        if (path.equals("/") || (path.equals("..") && currentDir.getParent() == null)){
+            fileSystem.setCurrentDir(fileSystem.getRootDirectory());
+            return "moved to directory '/'";
+        }
+
+        for (String component : pathComponents) {
+            if (path.equals("..")) {
+                currentDir = currentDir.getParent();
+            } else if (!component.isEmpty() && !component.equals(".")) {
+                Archive archive = currentDir.getSubArchive(component);
+                if (archive instanceof Dir) {
+                    currentDir = (Dir) archive;
+                } else {
+                    return "'" + path + "' directory does not exist";
+                }
             }
         }
-        return "Moved to directory: '" + fileSystem.currentDir().getName() + "'";
+
+        fileSystem.setCurrentDir(currentDir);
+        return "moved to directory '" + currentDir.getName() + "'";
     }
 }

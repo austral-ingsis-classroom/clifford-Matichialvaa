@@ -20,6 +20,6 @@ public class MkDir implements Command{
         Dir currentDir = fileSystem.currentDir();
         Dir newDir = new Dir(dirName, currentDir);
         currentDir.addSubArchive(newDir);
-        return "'" + dirName + "' file created";
+        return "'" + dirName + "' directory created";
     }
 }

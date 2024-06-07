@@ -8,4 +8,5 @@ public interface FileSystem {
     String runCommand(String command);
     Dir currentDir();
     void setCurrentDir(Dir dir);
+    Dir getRootDirectory();
 }

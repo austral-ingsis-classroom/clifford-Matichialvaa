@@ -20,13 +20,13 @@ public class Rm implements Command{
         Archive archive = currentDir.getSubArchive(name);
 
         if (archive == null) {
-            return "No existe";
+            return "cannot remove not existing archive";
         } else if (archive instanceof Dir) {
             if (recursive) {
                 currentDir.removeSubArchive(name);
                 return "'" + name + "' removed";
             } else {
-                return "No se puede eliminar un directorio sin la opcion --recursive";
+                return "cannot remove '" + name +  "', is a directory";
             }
         } else {
             currentDir.removeSubArchive(name);
