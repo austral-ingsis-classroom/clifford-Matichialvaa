@@ -16,7 +16,8 @@ public class FileSystemTests {
     final List<String> commands = new ArrayList<>();
     final List<String> expectedResult = new ArrayList<>();
 
-    //lleno la lista de comandos y resultados esperados, ya que el stream no lo soportaba gradle de github.
+    // lleno la lista de comandos y resultados esperados, ya que el stream no lo soportaba gradle de
+    // github.
     for (Map.Entry<String, String> entry : commandsAndResults) {
       commands.add(entry.getKey());
       expectedResult.add(entry.getValue());
