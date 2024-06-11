@@ -27,15 +27,15 @@ public class Ls implements Command {
       elements.sort(Collections.reverseOrder());
     }
 
-    StringBuilder result = new StringBuilder();
+    String result = "";
     for (String element : elements) {
-      result.append(element).append(" ");
+      result += element + " ";
     }
 
     if (!result.isEmpty()) {
-      result.deleteCharAt(result.length() - 1);
+      result = result.substring(0, result.length() - 1);
     }
 
-    return result.toString();
+    return result;
   }
 }
