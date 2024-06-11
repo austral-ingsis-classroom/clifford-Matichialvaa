@@ -3,6 +3,7 @@ package edu.austral.ingsis;
 import static java.util.Map.entry;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
@@ -12,9 +13,14 @@ public class FileSystemTests {
   private final FileSystemRunner runner = new MyFileSystemRunner();
 
   private void executeTest(List<Map.Entry<String, String>> commandsAndResults) {
-    final List<String> commands = commandsAndResults.stream().map(Map.Entry::getKey).toList();
-    final List<String> expectedResult =
-        commandsAndResults.stream().map(Map.Entry::getValue).toList();
+    final List<String> commands = new ArrayList<>();
+    final List<String> expectedResult = new ArrayList<>();
+
+    //lleno la lista de comandos y resultados esperados, ya que el stream no lo soportaba gradle de github.
+    for (Map.Entry<String, String> entry : commandsAndResults) {
+      commands.add(entry.getKey());
+      expectedResult.add(entry.getValue());
+    }
 
     final List<String> actualResult = runner.executeCommands(commands);
 
